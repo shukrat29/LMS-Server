@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
+import { dbConnect } from "./config/dbConfig.js";
 
 const app = express();
 
@@ -15,8 +16,13 @@ app.get("/", (req, res) => {
   res.send("Server is a live");
 });
 
-app.listen(PORT, (error) => {
-  error
-    ? console.log(error)
-    : console.log(`Server running at port ${PORT} successfully`);
-});
+// DB connect and Server start
+dbConnect()
+  .then(() => {
+    app.listen(PORT, (error) => {
+      error
+        ? console.log(error)
+        : console.log("Server is running at http://localhost:" + PORT);
+    });
+  })
+  .catch((error) => console.log(error));
