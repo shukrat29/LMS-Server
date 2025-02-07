@@ -3,6 +3,8 @@ import cors from "cors";
 import morgan from "morgan";
 import { dbConnect } from "./config/dbConfig.js";
 import authRoute from "./routes/authRoute.js";
+import { errorHandler } from "./middleware/errorHandler.js";
+import { responseClient } from "./middleware/responseClient.js";
 
 const app = express();
 
@@ -16,10 +18,14 @@ app.use(express.json());
 // api endpoints
 app.use("/api/v1/auth", authRoute);
 
-// checking server
+// checking server is live
 app.get("/", (req, res) => {
-  res.send("Server is a live");
+  const message = "Server is live";
+  responseClient({ req, res, message });
 });
+
+// global error handler
+app.use(errorHandler);
 
 // DB connect and Server start
 dbConnect()
