@@ -5,6 +5,8 @@ import { dbConnect } from "./config/dbConfig.js";
 import authRoute from "./routes/authRoute.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { responseClient } from "./middleware/responseClient.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 
